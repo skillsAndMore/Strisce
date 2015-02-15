@@ -1,0 +1,106 @@
+@import "compass";
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+//Colori AndMore
+$color-andmore: ( #801C12, #D35400, #115370, #18749C, #613904, #B36907 );
+$pcolor-andmore: ( #801C12 15%, #D35400 25%, #115370 45%, #18749C 65%, #613904 80%, #B36907 100% );
+
+@mixin strisce($colori, $direzione: "to bottom") {
+  $strisce: 100% / length($colori); //Larghezza colore
+  $auto: not(type-of(nth($colori, 1)) == list); //Ricerca percentuali
+  $gradiente: (); //Variabile di controllo
+
+
+  @for $i from 1 through length($colori) {
+    $colore: nth($colori, $i);
+    $controllo: ();
+
+    @if $auto == true {
+      $controllo: $colore $strisce * ($i - 1), $colore $strisce * $i;
+    }
+
+    @else {
+
+      @if $i > 1 {
+        $prev: nth($colori, $i - 1);
+        $controllo: append($controllo, nth($colore, 1) nth($prev, 2));
+      }
+      $controllo: append($controllo, $colore);
+
+    }
+
+    $gradiente: join($gradiente, $controllo, comma);
+
+  }//fine @for
+
+  @include background-image(linear-gradient($direzione, $gradiente));
+}//fine strisce()
+
+html,body{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background-color: #ccc;
+}
+
+.titolo{
+  @include display-flex;
+  //@include flex-direction( column );
+  @include align-items( center );
+  @include justify-content( center );
+  height: 100%;
+  width: 100%;
+}
+
+h1{
+  @include flex(1);
+
+  background-color: #fff;
+  text-align: center;
+  width: 100%;
+  padding: 5% 0;
+  position: relative;
+
+  &:before, &:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10%;
+  }
+
+  &:before {
+    top: 0;
+    @include strisce($color-andmore, to right);
+  }
+
+  &:after {
+    bottom: 0;
+
+    //Una Riga
+    //@include background-image(linear-gradient(to right, #801c12 15%, #d35400 25%, #115370 45%, #18749c 65%, #613904 80%, #b36907 100%));
+
+    //Multiple Righe
+@include background-image(
+  linear-gradient(
+    to right,
+    #801c12 0%,
+    #801c12 15%,
+    #d35400 15%,
+    #d35400 25%,
+    #115370 25%,
+    #115370 50%,
+    #18749c 50%,
+    #18749c 65%,
+    #613904 65%,
+    #613904 80%,
+    #b36907 80%,
+    #b36907 100%
+  )
+);
+  }
+}
