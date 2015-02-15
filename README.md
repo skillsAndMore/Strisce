@@ -16,7 +16,8 @@ Codice SASS:
 ```.test{
   $colori: ( #801C12 15%, #D35400 25%, #115370 45%, #18749C 65%, #613904 80%, #B36907 100% );
   @include strisce( $colori, to right);
-}```
+}
+```
 
 Codice CSS:
 ```.test {
@@ -38,4 +39,5 @@ Codice CSS:
     #b36907 80%,
     #b36907 100%
   );
-}```
+}
+```
